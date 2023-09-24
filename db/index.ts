@@ -1,25 +1,16 @@
-import { Embeddings } from "langchain/embeddings/base";
-import { PGVectorStore } from "langchain/vectorstores/pgvector";
-import { PoolConfig } from "pg";
-
-const config = {
-  postgresConnectionOptions: {
-    type: "postgres",
-    host: "127.0.0.1",
-    port: 5433,
-    user: "myuser",
-    password: "ChangeMe",
-    database: "api",
-  } as PoolConfig,
-  tableName: "testlangchain",
-  columns: {
-    idColumnName: "id",
-    vectorColumnName: "vector",
-    contentColumnName: "content",
-    metadataColumnName: "metadata",
-  },
-};
+import { Embeddings } from "langchain/embeddings/base"
+import { PgVector } from "./pg_vector"
 
 export const getStore = async (embedding: Embeddings) => {
-  return await PGVectorStore.initialize(embedding, config)
+  if(Bun.env.DB_CHOICE == 'pg') {
+    const pg = new PgVector()
+    return await pg.getStore(embedding)
+  }
+
+  if(Bun.env.DB_CHOICE == 'pinecone') {
+    const pg = new PgVector()
+    return await pg.getStore(embedding)
+  }
+
+  throw 'Cannot connect to db...'
 }

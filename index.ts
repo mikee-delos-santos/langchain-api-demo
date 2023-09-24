@@ -82,8 +82,6 @@ app.post("/prompt", f.fields([]), async (req, res) => {
   } else {
     promptText = 'Answer the question. If you do not know the answer, say "I do not know". Do not make up answers\n\nQuestion:{question}'
     const prompt = PromptTemplate.fromTemplate(promptText).pipe(llm);
-    console.log('prompt done');
-    console.log('waiting for result');
     result = await prompt.invoke({question: req.body.text})
   }
 
