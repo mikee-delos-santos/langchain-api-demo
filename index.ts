@@ -40,7 +40,7 @@ app.post("/add_to_store", f.fields([]) , async (req, res) => {
 
     res.send({message: 'Success'})
   } catch (error) {
-    res.send({message: "Error saving"})
+    res.send({message: error})
   }
 });
 

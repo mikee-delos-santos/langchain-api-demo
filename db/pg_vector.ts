@@ -11,6 +11,7 @@ const config = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    ssl: true
   } as PoolConfig,
   tableName: "testlangchain",
   columns: {
@@ -23,6 +24,7 @@ const config = {
 
 export class PgVector implements DBBase {
   async getStore(embedding: Embeddings) {
+    console.log(config)
     return await PGVectorStore.initialize(embedding, config)  
   }
 }
