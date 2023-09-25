@@ -4,7 +4,7 @@ import { HuggingFaceInferenceEmbeddings } from "langchain/embeddings/hf";
 
 export const getHFEmbeddingModel = async (model?: string) => {
   let config = {
-    apiKey: Bun.env.HUGGING_FACE_API_KEY,
+    apiKey: process.env.HUGGING_FACE_API_KEY,
     model: model,
   };
 
@@ -12,5 +12,5 @@ export const getHFEmbeddingModel = async (model?: string) => {
 }
 
 export const getOpenAIEmbeddingModel = async () => {
-  return new OpenAIEmbeddings({openAIApiKey: Bun.env.OPENAI_API_KEY})
+  return new OpenAIEmbeddings({openAIApiKey: process.env.OPENAI_API_KEY})
 }
