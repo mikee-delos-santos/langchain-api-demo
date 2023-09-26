@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import * as AI from './ai';
 import * as DB from './db';
 import { CharacterTextSplitter } from "langchain/text_splitter";
@@ -11,11 +12,14 @@ import { StringOutputParser } from "langchain/schema/output_parser";
 const app = express();
 const port = 8080;
 const f = multer();
+const _c = cors();
+app.use(_c);
 
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next()
-})
+// app.use(function (req, res, next) {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   next()
+// })
+
 
 app.get("/", async (req, res) =>  {
   res.send("Hello");
