@@ -12,6 +12,11 @@ const app = express();
 const port = 8080;
 const f = multer();
 
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next()
+})
+
 app.get("/", async (req, res) =>  {
   res.send("Hello");
 });
