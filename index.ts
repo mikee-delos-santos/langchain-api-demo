@@ -103,11 +103,11 @@ app.post("/prompt", f.fields([]), async (req, res) => {
   })
 });
 
-app.post('/text_moderation', f.fields([]), async (req, res) => {
+app.post('/text_moderation', async (req, res) => {
   const response =  await Axios.post('https://api.sightengine.com/1.0/text/check.json', null, { params: {
     api_user: process.env.SIGHT_ENGINE_API_USER,
     api_secret: process.env.SIGHT_ENGINE_API_SECRET,
-    text: req.body['text'],
+    text: req.query['text'],
     mode: 'ml',
     lang: 'en'
   }})
