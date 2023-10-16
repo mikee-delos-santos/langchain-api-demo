@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import * as AI from './ai';
 import * as DB from './db';
+import  Axios from 'axios';
 import { CharacterTextSplitter } from "langchain/text_splitter";
 import multer from "multer";
 import { Document } from "langchain/document";
@@ -22,7 +23,6 @@ app.use(function (req, response, next) {
   response.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   next()
 })
-
 
 app.get("/", async (req, res) =>  {
   res.send("Hello");
@@ -102,6 +102,18 @@ app.post("/prompt", f.fields([]), async (req, res) => {
     result: result
   })
 });
+
+app.post('/text_moderation', async (req, res) => {
+  const response =  await Axios.post('https://api.sightengine.com/1.0/text/check.json', null, { params: {
+    api_user: process.env.SIGHT_ENGINE_API_USER,
+    api_secret: process.env.SIGHT_ENGINE_API_SECRET,
+    text: req.query['text'],
+    mode: 'ml',
+    lang: 'en'
+  }})
+
+  res.send({...response.data});
+})
   
 
 app.listen(port, () => {
